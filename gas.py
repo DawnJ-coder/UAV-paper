@@ -1,77 +1,106 @@
-一、预测结果诊断
-----------------------------------------------------------------------------------------------------
-144226 样本数: 38
-  FALSE_LEAK: 19
-  TRUE_LEAK: 19
-模型准确率: 0.5789
-模型误判数量: 16
-TRUE_LEAK 平均概率: 0.5618
-FALSE_LEAK 平均概率: 0.4443
-TRUE-FALSE 平均概率差: 0.1175
-概率灰区 [0.4, 0.6] 样本数: 10
-冲突/SUSPECT样本数量: 10
-预测明细: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_predictions_sorted.csv
-误判样本: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_wrong_samples.csv
-冲突/SUSPECT样本: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_suspect_or_conflict_samples.csv
-按center配对预测: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_center_pair_predictions.csv
+二、预测层面差异
+------------------------------------------------------------------------------------------------------------------------
+预测差异表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v11_144226_difference_analysis_results\v11_144226_prediction_difference.csv
+  144226 TRUE平均概率: 0.5618
+  144226 FALSE平均概率: 0.4443
+  144226 TRUE-FALSE概率差: 0.1175
+  144226 灰区比例[0.4,0.6]: 0.2632
+  144226 center配对排序正确率: 0.7368421052631579
+  144226 配对失败center: 14 | 15 | 16 | 17 | 18
 
-按 center 配对概率排序:
-  TRUE 概率 > FALSE 概率 的 center 比例: 0.7368
-  配对排序失败 center 数量: 5
-  配对排序失败 center: 18, 17, 16, 15, 14
 
-二、特征区分度诊断
-----------------------------------------------------------------------------------------------------
-[v7_feature]
-对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_v7_feature_compare.csv
-  区分力前10特征:
-    best_direction_combined_score__time_robust_z: AUC=1.000, |d|=7.286, overlap=0.000, true_mean=-0.486357, false_mean=0.556104
-    best_direction_combined_score: AUC=1.000, |d|=7.286, overlap=0.000, true_mean=0.770592, false_mean=0.852768
-    direction_contrast__time_robust_z: AUC=1.000, |d|=5.402, overlap=0.000, true_mean=0.585012, false_mean=-0.367863
-    direction_contrast: AUC=1.000, |d|=5.402, overlap=0.000, true_mean=1.27288, false_mean=1.07355
-    spec_slope__time_robust_z: AUC=1.000, |d|=5.190, overlap=0.000, true_mean=0.629372, false_mean=-0.373148
-    spec_slope: AUC=1.000, |d|=5.190, overlap=0.000, true_mean=-0.000193195, false_mean=-0.000205389
-    direction_contrast__time_rank_pct: AUC=1.000, |d|=3.379, overlap=0.000, true_mean=0.763158, false_mean=0.263158
-    spec_slope__time_rank_pct: AUC=1.000, |d|=3.379, overlap=0.000, true_mean=0.763158, false_mean=0.263158
-    best_direction_combined_score__time_rank_pct: AUC=1.000, |d|=3.379, overlap=0.000, true_mean=0.263158, false_mean=0.763158
-    decay_R2__time_robust_z: AUC=0.823, |d|=1.389, overlap=0.316, true_mean=0.246309, false_mean=-0.562114
-  单特征最好AUC: 1.0000
-  特征分布中位重叠度: 0.2105
-  诊断: 存在较明显区分特征，可以进一步重点分析。
+三、整体特征分布偏移：144226 哪些特征整体和别人不一样
+------------------------------------------------------------------------------------------------------------------------
+分布偏移表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v11_144226_difference_analysis_results\v11_144226_feature_shift_vs_others.csv
+  偏移最大的前15个特征:
+    time_energy_kurtosis: shift=5.614, |d|=3.713, KS=0.963, 144226均值=7.25123, 其他均值=4.08247
+    time_energy_max_mean_ratio: shift=3.743, |d|=1.771, KS=1.000, 144226均值=1.42841, 其他均值=1.75866
+    time_energy_cv: shift=3.636, |d|=1.830, KS=0.954, 144226均值=0.115974, 其他均值=0.20632
+    spec_centroid_hz: shift=2.734, |d|=1.149, KS=0.731, 144226均值=26481.9, 其他均值=26047.2
+    hm_compactness_p95: shift=2.296, |d|=1.201, KS=0.554, 144226均值=0.138446, 其他均值=0.420474
+    hm_p90_elongation: shift=2.283, |d|=1.289, KS=0.495, 144226均值=1.24703, 其他均值=1.68278
+    spec_peak_freq_hz: shift=2.227, |d|=0.696, KS=0.719, 144226均值=26299.3, 其他均值=25599.4
+    time_rms: shift=2.051, |d|=0.255, KS=0.815, 144226均值=0.0986256, 其他均值=0.0900572
+    energy_60_70k: shift=2.032, |d|=0.625, KS=0.620, 144226均值=1.38257e-06, 其他均值=1.08718e-06
+    high_freq_ratio: shift=2.025, |d|=0.700, KS=0.568, 144226均值=0.0102902, 其他均值=0.0122504
+    spec_flatness: shift=1.993, |d|=0.520, KS=0.574, 144226均值=0.0317854, 其他均值=0.0356383
+    ratio_40_50k: shift=1.982, |d|=0.888, KS=0.505, 144226均值=0.00620388, 其他均值=0.0075185
+    spec_bandwidth_hz: shift=1.940, |d|=0.931, KS=0.398, 144226均值=3343.49, 其他均值=3624.5
+    hm_p95_elongation: shift=1.927, |d|=1.040, KS=0.452, 144226均值=1.33647, 其他均值=1.82067
+    energy_20_30k: shift=1.842, |d|=0.080, KS=0.815, 144226均值=0.00900353, 其他均值=0.00962612
+四、TRUE/FALSE关系：哪些特征在144226里方向和别人相反
+------------------------------------------------------------------------------------------------------------------------
+方向对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v11_144226_difference_analysis_results\v11_144226_label_separation_vs_others.csv
+方向翻转特征表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v11_144226_difference_analysis_results\v11_144226_direction_flip_features.csv
+  方向翻转特征数量: 48
+  方向翻转前15:
+    ratio_30_40k__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-1.00663, 其他平均diff=0.186771
+    ratio_30_40k: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.073355, 其他平均diff=0.0127616
+    ratio_20_30k__time_robust_z: 144226=TRUE>FALSE, 其他多数=TRUE<FALSE, 144226_AUC=1.000, 144226_diff=1.00778, 其他平均diff=-0.250135
+    ratio_20_30k: 144226=TRUE>FALSE, 其他多数=TRUE<FALSE, 144226_AUC=1.000, 144226_diff=0.0745673, 其他平均diff=-0.0143786
+    spec_bandwidth_hz: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-461.064, 其他平均diff=357.106
+    spec_bandwidth_hz__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-1.03955, 其他平均diff=0.398247
+    spec_entropy__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.937137, 其他平均diff=0.981329
+    spec_entropy: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.0218372, 其他平均diff=0.0240442
+    spec_rolloff_85_hz: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-1796.05, 其他平均diff=687.706
+    spec_rolloff_85_hz__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.917743, 其他平均diff=0.176935
+    spec_centroid_hz: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-300.177, 其他平均diff=-63.151
+    spec_centroid_hz__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-1.04773, 其他平均diff=0.132944
+    spec_rolloff_85_hz__time_rank_pct: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.5, 其他平均diff=0.138597
+    spec_entropy__time_rank_pct: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.5, 其他平均diff=0.499077
+    spec_centroid_hz__time_rank_pct: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000, 144226_diff=-0.5, 其他平均diff=0.106484
 
-[raw_feature]
-对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_raw_feature_compare.csv
-  区分力前10特征:
-    best_direction_combined_score: AUC=1.000, |d|=7.286, overlap=0.000, true_mean=0.770592, false_mean=0.852768
-    direction_contrast: AUC=1.000, |d|=5.402, overlap=0.000, true_mean=1.27288, false_mean=1.07355
-    spec_slope: AUC=1.000, |d|=5.190, overlap=0.000, true_mean=-0.000193195, false_mean=-0.000205389
-    high_freq_ratio: AUC=0.950, |d|=2.236, overlap=0.158, true_mean=0.0096807, false_mean=0.0108996
-    decay_R2: AUC=0.823, |d|=1.389, overlap=0.316, true_mean=0.878475, false_mean=0.843452
-    near_far_ratio: AUC=0.789, |d|=1.152, overlap=0.526, true_mean=1.67801, false_mean=1.7465
-    ratio_60_70k: AUC=0.784, |d|=1.120, overlap=0.211, true_mean=0.000149452, false_mean=0.000130545
-    time_energy_cv: AUC=0.643, |d|=0.315, overlap=0.211, true_mean=0.116509, false_mean=0.115439
-    spec_flatness: AUC=0.518, |d|=0.304, overlap=0.474, true_mean=0.0320446, false_mean=0.0315262
-  单特征最好AUC: 1.0000
-  特征分布中位重叠度: 0.2105
-  诊断: 存在较明显区分特征，可以进一步重点分析。
+五、center层面：异常是否集中在 center_14~18
+------------------------------------------------------------------------------------------------------------------------
+center配对异常表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v11_144226_difference_analysis_results\v11_144226_center_pair_anomaly.csv
+  center异常前10:
+    center_18: 14-18=1, prob_diff=-0.4185714285714286, order_correct=0, max_z=9.794
+    center_17: 14-18=1, prob_diff=-0.41714285714285715, order_correct=0, max_z=9.252
+    center_16: 14-18=1, prob_diff=-0.38857142857142857, order_correct=0, max_z=6.724
+    center_15: 14-18=1, prob_diff=-0.32, order_correct=0, max_z=4.506
+    center_14: 14-18=1, prob_diff=-0.12428571428571433, order_correct=0, max_z=4.481
+    center_08: 14-18=0, prob_diff=0.49142857142857144, order_correct=1, max_z=8.896
+    center_12: 14-18=0, prob_diff=0.4342857142857144, order_correct=1, max_z=7.639
+    center_07: 14-18=0, prob_diff=0.23714285714285716, order_correct=1, max_z=7.223
+    center_10: 14-18=0, prob_diff=0.01571428571428579, order_correct=1, max_z=4.979
+    center_01: 14-18=0, prob_diff=0.2542857142857143, order_correct=1, max_z=4.918
 
-[heatmap_feature]
-对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_heatmap_feature_compare.csv
-  区分力前10特征:
-    hm_core_to_outer_energy_ratio: AUC=0.986, |d|=1.377, overlap=0.211, true_mean=0.998405, false_mean=0.561856
-    hm_radial_spread_norm: AUC=0.978, |d|=2.534, overlap=0.158, true_mean=0.183294, false_mean=0.216957
-    hm_diffuse_score: AUC=0.978, |d|=2.298, overlap=0.053, true_mean=0.611463, false_mean=0.673118
-    hm_entropy_2d: AUC=0.978, |d|=2.064, overlap=0.105, true_mean=0.949549, false_mean=0.9664
-    hm_energy_concentration_top10: AUC=0.970, |d|=2.223, overlap=0.211, true_mean=0.457129, false_mean=0.387143
-    hm_weighted_eccentricity: AUC=0.898, |d|=1.906, overlap=0.000, true_mean=0.170964, false_mean=0.304482
-    hm_weighted_elongation: AUC=0.898, |d|=1.393, overlap=0.000, true_mean=1.02026, false_mean=1.05071
-    hm_energy_concentration_top5: AUC=0.892, |d|=1.845, overlap=0.263, true_mean=0.251478, false_mean=0.220164
-    hm_shape_leak_like_score: AUC=0.820, |d|=1.326, overlap=0.211, true_mean=0.35683, false_mean=0.409802
-    hm_largest_component_ratio_p95: AUC=0.601, |d|=0.393, overlap=0.158, true_mean=0.998028, false_mean=0.99648
-  单特征最好AUC: 0.9861
-  特征分布中位重叠度: 0.2105
-  诊断: 存在较明显区分特征，可以进一步重点分析。
+令行摘要:
+  144226 TRUE-FALSE概率差: 0.1175
+  144226 灰区比例[0.4,0.6]: 0.2632
+  144226 center配对排序正确率: 0.7368421052631579
+  144226 配对失败center: 14 | 15 | 16 | 17 | 18
 
+
+  144226整体分布偏移最大的前8个特征:
+    time_energy_kurtosis: shift=5.614, |d|=3.713, 144226均值=7.25123, 其他均值=4.08247
+    time_energy_max_mean_ratio: shift=3.743, |d|=1.771, 144226均值=1.42841, 其他均值=1.75866
+    time_energy_cv: shift=3.636, |d|=1.830, 144226均值=0.115974, 其他均值=0.20632
+    spec_centroid_hz: shift=2.734, |d|=1.149, 144226均值=26481.9, 其他均值=26047.2
+    hm_compactness_p95: shift=2.296, |d|=1.201, 144226均值=0.138446, 其他均值=0.420474
+    hm_p90_elongation: shift=2.283, |d|=1.289, 144226均值=1.24703, 其他均值=1.68278
+    spec_peak_freq_hz: shift=2.227, |d|=0.696, 144226均值=26299.3, 其他均值=25599.4
+    time_rms: shift=2.051, |d|=0.255, 144226均值=0.0986256, 其他均值=0.0900572
+
+  方向翻转特征数量: 48
+    ratio_30_40k__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000
+    ratio_30_40k: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000
+    ratio_20_30k__time_robust_z: 144226=TRUE>FALSE, 其他多数=TRUE<FALSE, 144226_AUC=1.000
+    ratio_20_30k: 144226=TRUE>FALSE, 其他多数=TRUE<FALSE, 144226_AUC=1.000
+    spec_bandwidth_hz: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000
+    spec_bandwidth_hz__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000
+    spec_entropy__time_robust_z: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000
+    spec_entropy: 144226=TRUE<FALSE, 其他多数=TRUE>FALSE, 144226_AUC=1.000
+
+  center异常前8:
+    center_18: 14-18=1, prob_diff=-0.4185714285714286, order_correct=0, max_z=9.794
+    center_17: 14-18=1, prob_diff=-0.41714285714285715, order_correct=0, max_z=9.252
+    center_16: 14-18=1, prob_diff=-0.38857142857142857, order_correct=0, max_z=6.724
+    center_15: 14-18=1, prob_diff=-0.32, order_correct=0, max_z=4.506
+    center_14: 14-18=1, prob_diff=-0.12428571428571433, order_correct=0, max_z=4.481
+    center_08: 14-18=0, prob_diff=0.49142857142857144, order_correct=1, max_z=8.896
+    center_12: 14-18=0, prob_diff=0.4342857142857144, order_correct=1, max_z=7.639
+    center_07: 14-18=0, prob_diff=0.23714285714285716, order_correct=1, max_z=7.223
 
 
 
