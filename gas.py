@@ -1,115 +1,77 @@
-PS C:\Users\jiangxinru6\Desktop\wurenji> python .\leak_v8.py
-====================================================================================================
-v8.1 热力图核心形态特征消融版
-====================================================================================================
-样本数量: 146
-label
-TRUE_LEAK     73
-FALSE_LEAK    73
-Name: count, dtype: int64
+一、预测结果诊断
+----------------------------------------------------------------------------------------------------
+144226 样本数: 38
+  FALSE_LEAK: 19
+  TRUE_LEAK: 19
+模型准确率: 0.5789
+模型误判数量: 16
+TRUE_LEAK 平均概率: 0.5618
+FALSE_LEAK 平均概率: 0.4443
+TRUE-FALSE 平均概率差: 0.1175
+概率灰区 [0.4, 0.6] 样本数: 10
+冲突/SUSPECT样本数量: 10
+预测明细: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_predictions_sorted.csv
+误判样本: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_wrong_samples.csv
+冲突/SUSPECT样本: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_suspect_or_conflict_samples.csv
+按center配对预测: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_center_pair_predictions.csv
 
-开始提取 v8.1 核心 heatmap 形态特征...
-  已处理 20/146 张/行
-  已处理 40/146 张/行
-  已处理 60/146 张/行
-  已处理 80/146 张/行
-  已处理 100/146 张/行
-  已处理 120/146 张/行
-  已处理 140/146 张/行
-  已处理 146/146 张/行
-核心 heatmap 特征表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_heatmap_core_shape_features.csv
-缺失/失败 heatmap 数量: 0
+按 center 配对概率排序:
+  TRUE 概率 > FALSE 概率 的 center 比例: 0.7368
+  配对排序失败 center 数量: 5
+  配对排序失败 center: 18, 17, 16, 15, 14
 
-开始构造 v8.1 消融特征集...
-初始 v7 数值特征数: 41
-v7 稳健基础特征数: 26
-heatmap 核心形态基础特征数: 26
-  A_v7_only: 模型特征数=78, 文件=C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_features_A_v7_only.csv
-  B_heatmap_shape_only: 模型特征数=78, 文件=C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_features_B_heatmap_shape_only.csv
-  C_v7_plus_heatmap_shape: 模型特征数=156, 文件=C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_features_C_v7_plus_heatmap_shape.csv
+二、特征区分度诊断
+----------------------------------------------------------------------------------------------------
+[v7_feature]
+对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_v7_feature_compare.csv
+  区分力前10特征:
+    best_direction_combined_score__time_robust_z: AUC=1.000, |d|=7.286, overlap=0.000, true_mean=-0.486357, false_mean=0.556104
+    best_direction_combined_score: AUC=1.000, |d|=7.286, overlap=0.000, true_mean=0.770592, false_mean=0.852768
+    direction_contrast__time_robust_z: AUC=1.000, |d|=5.402, overlap=0.000, true_mean=0.585012, false_mean=-0.367863
+    direction_contrast: AUC=1.000, |d|=5.402, overlap=0.000, true_mean=1.27288, false_mean=1.07355
+    spec_slope__time_robust_z: AUC=1.000, |d|=5.190, overlap=0.000, true_mean=0.629372, false_mean=-0.373148
+    spec_slope: AUC=1.000, |d|=5.190, overlap=0.000, true_mean=-0.000193195, false_mean=-0.000205389
+    direction_contrast__time_rank_pct: AUC=1.000, |d|=3.379, overlap=0.000, true_mean=0.763158, false_mean=0.263158
+    spec_slope__time_rank_pct: AUC=1.000, |d|=3.379, overlap=0.000, true_mean=0.763158, false_mean=0.263158
+    best_direction_combined_score__time_rank_pct: AUC=1.000, |d|=3.379, overlap=0.000, true_mean=0.263158, false_mean=0.763158
+    decay_R2__time_robust_z: AUC=0.823, |d|=1.389, overlap=0.316, true_mean=0.246309, false_mean=-0.562114
+  单特征最好AUC: 1.0000
+  特征分布中位重叠度: 0.2105
+  诊断: 存在较明显区分特征，可以进一步重点分析。
 
-开始实验 A_v7_only 按时间点整组验证...
-特征数: 78
-  HM20260626_142938.ld: best_t=0.440, default_acc=1.000, model_acc=0.933, rank_acc=1.000, final_decisive_acc=1.000, suspect=2, auc=1.0
-  HM20260626_143034.ld: best_t=0.450, default_acc=0.895, model_acc=0.921, rank_acc=0.947, final_decisive_acc=0.971, suspect=3, auc=0.96398891966759
-  HM20260626_144226.ld: best_t=0.440, default_acc=0.711, model_acc=0.579, rank_acc=0.684, final_decisive_acc=0.647, suspect=4, auc=0.7008310249307479
-  HM20260626_144325.ld: best_t=0.480, default_acc=1.000, model_acc=1.000, rank_acc=1.000, final_decisive_acc=1.000, suspect=0, auc=1.0
+[raw_feature]
+对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_raw_feature_compare.csv
+  区分力前10特征:
+    best_direction_combined_score: AUC=1.000, |d|=7.286, overlap=0.000, true_mean=0.770592, false_mean=0.852768
+    direction_contrast: AUC=1.000, |d|=5.402, overlap=0.000, true_mean=1.27288, false_mean=1.07355
+    spec_slope: AUC=1.000, |d|=5.190, overlap=0.000, true_mean=-0.000193195, false_mean=-0.000205389
+    high_freq_ratio: AUC=0.950, |d|=2.236, overlap=0.158, true_mean=0.0096807, false_mean=0.0108996
+    decay_R2: AUC=0.823, |d|=1.389, overlap=0.316, true_mean=0.878475, false_mean=0.843452
+    near_far_ratio: AUC=0.789, |d|=1.152, overlap=0.526, true_mean=1.67801, false_mean=1.7465
+    ratio_60_70k: AUC=0.784, |d|=1.120, overlap=0.211, true_mean=0.000149452, false_mean=0.000130545
+    time_energy_cv: AUC=0.643, |d|=0.315, overlap=0.211, true_mean=0.116509, false_mean=0.115439
+    spec_flatness: AUC=0.518, |d|=0.304, overlap=0.474, true_mean=0.0320446, false_mean=0.0315262
+  单特征最好AUC: 1.0000
+  特征分布中位重叠度: 0.2105
+  诊断: 存在较明显区分特征，可以进一步重点分析。
 
-开始实验 B_heatmap_shape_only 按时间点整组验证...
-特征数: 78
-  HM20260626_142938.ld: best_t=0.310, default_acc=0.600, model_acc=0.467, rank_acc=0.533, final_decisive_acc=0.500, suspect=8, auc=0.64
-  HM20260626_143034.ld: best_t=0.470, default_acc=0.711, model_acc=0.737, rank_acc=0.684, final_decisive_acc=0.735, suspect=4, auc=0.7423822714681441
-  HM20260626_144226.ld: best_t=0.380, default_acc=0.553, model_acc=0.579, rank_acc=0.579, final_decisive_acc=0.594, suspect=6, auc=0.5373961218836565
-  HM20260626_144325.ld: best_t=0.420, default_acc=0.950, model_acc=0.825, rank_acc=0.950, final_decisive_acc=0.970, suspect=7, auc=0.9675
-
-开始实验 C_v7_plus_heatmap_shape 按时间点整组验证...
-特征数: 156
-  HM20260626_142938.ld: best_t=0.460, default_acc=1.000, model_acc=1.000, rank_acc=1.000, final_decisive_acc=1.000, suspect=0, auc=1.0
-  HM20260626_143034.ld: best_t=0.280, default_acc=0.842, model_acc=0.842, rank_acc=0.895, final_decisive_acc=0.912, suspect=4, auc=0.9529085872576177
-  HM20260626_144226.ld: best_t=0.440, default_acc=0.605, model_acc=0.579, rank_acc=0.658, final_decisive_acc=0.629, suspect=3, auc=0.6343490304709141
-  HM20260626_144325.ld: best_t=0.520, default_acc=0.900, model_acc=0.900, rank_acc=1.000, final_decisive_acc=1.000, suspect=4, auc=1.0
-
-=========================================================================\===========================
-v8.1 消融实验完成
-====================================================================================================
-总报告: C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_report.txt
-总汇总表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_ablation_overall_summary.csv
-heatmap核心特征表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\v8_1_heatmap_core_shape_features.csv
-144226 heatmap形态真假对比: C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\diagnosis_144226\HM20260626_144226_heatmap_shape_true_false_compare.csv
-
-消融实验核心结果:
-
-实验 A_v7_only: 特征数=78
-  平均AUC=0.916, 平均model_acc=0.858, 平均rank_acc=0.908
-  144226: AUC=0.701, default_acc=0.711, model_acc=0.579, rank_acc=0.684, final_decisive_acc=0.647, suspect=4
-  重要特征前10:
-    spec_slope__time_robust_z: 0.131072
-    spec_slope__time_rank_pct: 0.115445
-    ratio_60_70k__time_robust_z: 0.081877
-    best_direction_combined_score__time_robust_z: 0.081713
-    ratio_60_70k__time_rank_pct: 0.064652
-    best_direction_combined_score__time_rank_pct: 0.062435
-    best_direction_combined_score: 0.060873
-    spec_slope: 0.044274
-    direction_contrast__time_robust_z: 0.031571
-    ratio_60_70k: 0.030385
+[heatmap_feature]
+对比表: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_144226_diagnosis_results\v9_144226_heatmap_feature_compare.csv
+  区分力前10特征:
+    hm_core_to_outer_energy_ratio: AUC=0.986, |d|=1.377, overlap=0.211, true_mean=0.998405, false_mean=0.561856
+    hm_radial_spread_norm: AUC=0.978, |d|=2.534, overlap=0.158, true_mean=0.183294, false_mean=0.216957
+    hm_diffuse_score: AUC=0.978, |d|=2.298, overlap=0.053, true_mean=0.611463, false_mean=0.673118
+    hm_entropy_2d: AUC=0.978, |d|=2.064, overlap=0.105, true_mean=0.949549, false_mean=0.9664
+    hm_energy_concentration_top10: AUC=0.970, |d|=2.223, overlap=0.211, true_mean=0.457129, false_mean=0.387143
+    hm_weighted_eccentricity: AUC=0.898, |d|=1.906, overlap=0.000, true_mean=0.170964, false_mean=0.304482
+    hm_weighted_elongation: AUC=0.898, |d|=1.393, overlap=0.000, true_mean=1.02026, false_mean=1.05071
+    hm_energy_concentration_top5: AUC=0.892, |d|=1.845, overlap=0.263, true_mean=0.251478, false_mean=0.220164
+    hm_shape_leak_like_score: AUC=0.820, |d|=1.326, overlap=0.211, true_mean=0.35683, false_mean=0.409802
+    hm_largest_component_ratio_p95: AUC=0.601, |d|=0.393, overlap=0.158, true_mean=0.998028, false_mean=0.99648
+  单特征最好AUC: 0.9861
+  特征分布中位重叠度: 0.2105
+  诊断: 存在较明显区分特征，可以进一步重点分析。
 
 
-实验 B_heatmap_shape_only: 特征数=78
-  平均AUC=0.722, 平均model_acc=0.652, 平均rank_acc=0.687
-  144226: AUC=0.537, default_acc=0.553, model_acc=0.579, rank_acc=0.579, final_decisive_acc=0.594, suspect=6
-  重要特征前10:
-    hm_energy_concentration_top5: 0.078261
-    hm_energy_concentration_top5__time_robust_z: 0.064916
-    hm_energy_concentration_top10__time_robust_z: 0.048842
-    hm_energy_concentration_top10: 0.046192
-    hm_energy_concentration_top5__time_rank_pct: 0.037031
-    hm_p90_elongation: 0.035298
-    hm_diffuse_score: 0.027792
-    hm_core_to_outer_energy_ratio: 0.027629
-    hm_p90_elongation__time_robust_z: 0.025472
-    hm_energy_concentration_top10__time_rank_pct: 0.025145
 
-实验 C_v7_plus_heatmap_shape: 特征数=156
-  平均AUC=0.897, 平均model_acc=0.830, 平均rank_acc=0.888
-  144226: AUC=0.634, default_acc=0.605, model_acc=0.579, rank_acc=0.658, final_decisive_acc=0.629, suspect=3
-  重要特征前10:
-    spec_slope__time_robust_z: 0.105873
-    spec_slope__time_rank_pct: 0.073402
-    ratio_60_70k__time_robust_z: 0.063853
-    spec_slope: 0.063053
-    best_direction_combined_score__time_robust_z: 0.059533
-    best_direction_combined_score__time_rank_pct: 0.056513
-    ratio_60_70k__time_rank_pct: 0.052200
-    best_direction_combined_score: 0.049120
-    ratio_60_70k: 0.033411
-    direction_contrast__time_robust_z: 0.031924
-
-图片输出:
-  C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\figures\v8_1_ablation_auc.png
-  C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\figures\v8_1_ablation_model_accuracy.png
-  C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results\figures\v8_1_ablation_rank_accuracy.png
-
-输出文件夹: C:\Users\jiangxinru6\Desktop\wurenji\leak_v8_1_heatmap_shape_ablation_results
-PS C:\Users\jiangxinru6\Desktop\wurenji> 
 
