@@ -1,24 +1,24 @@
-逐time预测汇总:
-                time  n_centers  n_TRUE_LEAK  n_FALSE_LEAK  n_SUSPECT  n_INVALID_DATA  mean_prob_TRUE  median_prob_TRUE  mean_offset_combo_count  mean_bg40_direction_count
-HM20260624_100936.ld          1            0             1          0               0        0.406667          0.406667                     64.0                        8.0
-HM20260624_101130.ld          1            0             0          1               0        0.441111          0.441111                     64.0                        8.0
-HM20260624_101209.ld          1            0             0          1               0        0.434444          0.434444                     64.0                        8.0
-HM20260624_101256.ld          1            0             0          1               0        0.463333          0.463333                     64.0                        8.0
-HM20260624_101448.ld          1            0             0          1               0        0.467778          0.467778                     64.0                        8.0
+PS C:\Users\jiangxinru6\Desktop\wurenji> python 0713.py
+==========================================================================================
+v10 泄漏残差指纹相似度验证
+==========================================================================================
+v9结果目录: C:\Users\jiangxinru6\Desktop\wurenji\leak_v9_local_background_results
+参考scene: factory_A
+参考样本数: 30
+参考TRUE/FALSE: 15 / 15
 
+内部验证方式: stratified_sample_cv_fallback
+[警告] 每个类别没有至少两个独立time，无法按time整组验证；当前退回分层样本交叉验证。同一time的不同center可能进入不同折，因此结果只能作为初步检查，不能证明跨时间泛化。
+OOF Margin AUC: 1.0000
+自然阈值0 平衡准确率: 1.0000
+冻结阈值: 0.000000
+冻结阈值平衡准确率: 1.0000
+TRUE Margin中位数: 0.023620
+FALSE Margin中位数: -0.021056
 
-前30个center预测:
-                time center_norm pred_label  prob_TRUE_LEAK data_quality_flag  offset_combo_count  bg40_direction_count
-HM20260624_100936.ld          00 FALSE_LEAK        0.406667                OK                  64                     8
-HM20260624_101130.ld          00    SUSPECT        0.441111                OK                  64                     8
-HM20260624_101209.ld          00    SUSPECT        0.434444                OK                  64                     8
-HM20260624_101256.ld          00    SUSPECT        0.463333                OK                  64                     8
-HM20260624_101448.ld          00    SUSPECT        0.467778                OK                  64                     8
-
-报告: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_bg40_v7_domain_adaptive_results\v10_report.txt
-
-====================================================================================================
-全部完成
-输出文件夹: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_bg40_v7_domain_adaptive_results
-====================================================================================================
+输出目录: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_fingerprint_results
+内部OOF明细: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_fingerprint_results\v10_internal_oof_similarity.csv
+内部汇总: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_fingerprint_results\v10_internal_summary.csv
+冻结指纹: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_fingerprint_results\v10_frozen_reference.npz
+报告: C:\Users\jiangxinru6\Desktop\wurenji\leak_v10_fingerprint_results\v10_report.txt
 PS C:\Users\jiangxinru6\Desktop\wurenji> 
