@@ -1,4 +1,3 @@
-"/data1/data_for_jiang/leak_data/"
-"/data1/data_for_jiang/leak_data/0.1mm铜管泄漏_150kPa_240sccm_1.0m_null_136c.wav"
-"/data1/data_for_jiang/noise_data/"
-"/data1/data_for_jiang/noise_data/136mic/tonglu/tonglu_20250619/HM20250619185002.pd_136c.wav"
+候选1: K=6, beta=kullback-leibler, l1=0, seed=23, T-p10=0.5701, error=0.7286
+候选2: K=6, beta=kullback-leibler, l1=0, seed=42, T-p10=0.5702, error=0.7286
+候选3: K=6, beta=kullback-leibler, l1=1e-05, seed=23, T-p10=0.5702, error=0.7286
